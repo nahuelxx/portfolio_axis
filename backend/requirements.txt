@@ -1,0 +1,25 @@
+# ==== CORE DJANGO ====
+Django>=5.0,<6.0
+djangorestframework>=3.15
+django-cors-headers>=4.3
+
+# ==== EMAIL & INTEGRATIONS ====
+django-anymail>=10.3    # Para SendGrid, Mailgun o SES (opcional)
+python-decouple>=3.8    # Para manejo de .env y configuración segura
+
+# ==== UTILIDADES ====
+requests>=2.32          # Para llamadas HTTP (si las necesitas del lado backend)
+Pillow>=10.0            # Soporte para imágenes (opcional, si usas ImageField)
+psycopg2-binary>=2.9    # Para PostgreSQL (puede cambiarse según tu DB)
+gunicorn>=21.2          # Servidor WSGI para producción
+
+# ==== OPCIONALES ====
+celery>=5.3             # Para tareas asíncronas (envío de email, etc.)
+redis>=5.0              # Broker de mensajes para Celery
+whitenoise>=6.6         # Servir archivos estáticos en producción (si el front se integra dentro del backend)
+
+# ==== DESARROLLO ====
+black>=24.3             # Formateador de código
+isort>=5.13             # Ordenador de imports
+pytest>=8.2             # Testing
+pytest-django>=4.8
