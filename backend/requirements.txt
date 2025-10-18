@@ -2,9 +2,10 @@
 Django>=5.0,<6.0
 djangorestframework>=3.15
 django-cors-headers>=4.3
+django-admin-honeypot-updated-2021
 
 # ==== EMAIL & INTEGRATIONS ====
-django-anymail>=10.3    # Para SendGrid, Mailgun o SES (opcional)
+#django-anymail>=10.3    # Para SendGrid, Mailgun o SES (opcional)
 python-decouple>=3.8    # Para manejo de .env y configuración segura
 
 # ==== UTILIDADES ====
@@ -14,9 +15,9 @@ psycopg2-binary>=2.9    # Para PostgreSQL (puede cambiarse según tu DB)
 gunicorn>=21.2          # Servidor WSGI para producción
 
 # ==== OPCIONALES ====
-celery>=5.3             # Para tareas asíncronas (envío de email, etc.)
-redis>=5.0              # Broker de mensajes para Celery
-whitenoise>=6.6         # Servir archivos estáticos en producción (si el front se integra dentro del backend)
+#celery>=5.3             # Para tareas asíncronas (envío de email, etc.)
+#redis>=5.0              # Broker de mensajes para Celery
+#whitenoise>=6.6         # Servir archivos estáticos en producción (si el front se integra dentro del backend)
 
 # ==== DESARROLLO ====
 black>=24.3             # Formateador de código

@@ -21,19 +21,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-8)9e&8gsfbr=*26+r(@3q)jb0vfauq^i^u7pgt3zj$dd&+l$f_"
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Lee DEBUG desde variables de entorno (.env)
 DEBUG = config("DEBUG", default=True, cast=bool)
 
 # ALLOWED_HOSTS desde .env (coma separada)
-ALLOWED_HOSTS = [
-    h.strip()
-    for h in config("ALLOWED_HOSTS", default="127.0.0.1,localhost").split(",")
-    if h.strip()
-]
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -44,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "admin_honeypot",
     "rest_framework",
     "corsheaders",
     "apimail",
@@ -157,10 +153,12 @@ if not EMAIL_BACKEND:
 if EMAIL_BACKEND.endswith("smtp.EmailBackend"):
     EMAIL_HOST = config("EMAIL_HOST")
     EMAIL_PORT = config("EMAIL_PORT", cast=int, default=587)
-    EMAIL_HOST_USER = config("EMAIL_HOST_USER")
-    EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
     EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool, default=True)
     EMAIL_USE_SSL = config("EMAIL_USE_SSL", cast=bool, default=False)
     EMAIL_TIMEOUT = config("EMAIL_TIMEOUT", cast=int, default=30)
+    EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+    EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 
 DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="webmaster@localhost")
+
+CONTACT_RECIPIENT = config("CONTACT_RECIPIENT", default=DEFAULT_FROM_EMAIL)
