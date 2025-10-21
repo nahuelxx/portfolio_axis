@@ -29,8 +29,8 @@ SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", default=True, cast=bool)
 
 # ALLOWED_HOSTS desde .env (coma separada)
-ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ["https://portfolio-production-b8c7.up.railway.app/"]
+ALLOWED_HOSTS = [h.strip() for h in config("ALLOWED_HOSTS", default="127.0.0.1,localhost").split(",") if h.strip()]
+CSRF_TRUSTED_ORIGINS =  [o.strip() for o in config("CSRF_TRUSTED_ORIGINS", default="").split(",") if o.strip()]
 
 # Application definition
 
