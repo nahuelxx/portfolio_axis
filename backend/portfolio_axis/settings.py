@@ -30,7 +30,7 @@ DEBUG = config("DEBUG", default=True, cast=bool)
 
 # ALLOWED_HOSTS desde .env (coma separada)
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ["portfolioaxis-production.up.railway.app"]
+CSRF_TRUSTED_ORIGINS = ["portfolio-axis-prod.up.railway.app"]
 
 # Application definition
 
