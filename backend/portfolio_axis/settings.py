@@ -30,7 +30,7 @@ DEBUG = config("DEBUG", default=True, cast=bool)
 
 # ALLOWED_HOSTS desde .env (coma separada)
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ["portfolio-axis-prod.up.railway.app"]
+CSRF_TRUSTED_ORIGINS = ["https://portfolio-production-b8c7.up.railway.app/"]
 
 # Application definition
 
@@ -139,9 +139,6 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATIC_ROOT = "staticfiles"
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'static')
-]
 
 STORAGES = {
     "staticfiles": {
