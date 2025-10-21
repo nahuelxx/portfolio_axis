@@ -1,1 +1,1 @@
-web: gunicorn portfolio_axis.wsgi --log-file -
+web: gunicorn portfolio_axis.wsgi:application
