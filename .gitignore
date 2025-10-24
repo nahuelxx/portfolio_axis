@@ -2,13 +2,16 @@
 
 ##Backend##
 
-backend/venv
+backend/venv/
 
-backend/static
+backend/staticfiles/
 
 backend/db.sqlite3
+backend/*.sqlite3
 
-**/_pycache_/
+**/__pycache__/
+
+**/*.py[cod]
 
 **/.env
 
@@ -24,14 +27,14 @@ Thumbs.db
 ##Frontend##
 
 # dependencies
-/node_modules
+frontend/node_modules/
 
 # next.js
-/.next/
-/out/
+frontend/.next/
+frontend/out/
 
 # production
-/build
+frontend/build/
 
 # debug
 npm-debug.log*
@@ -39,12 +42,9 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files
-.env*
-
 # vercel
-.vercel
+frontend/.vercel/
 
 # typescript
-*.tsbuildinfo
-next-env.d.ts
+frontend/*.tsbuildinfo
+frontend/next-env.d.ts
