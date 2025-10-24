@@ -12,7 +12,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from decouple import config
+from django.core.exceptions import ImproperlyConfigured
 import os
+from urllib.parse import urlparse
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,6 +29,8 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 # Lee DEBUG desde variables de entorno (.env)
 DEBUG = config("DEBUG", default=True, cast=bool)
+ENVIRONMENT = config("ENVIRONMENT", default="development")  # 'development' | 'production'
+POSTGRES_LOCALLY = config("POSTGRES_LOCALLY", default=False, cast=bool)
 
 # ALLOWED_HOSTS desde .env (coma separada)
 ALLOWED_HOSTS = [h.strip() for h in config("ALLOWED_HOSTS", default="127.0.0.1,localhost").split(",") if h.strip()]
@@ -94,12 +98,43 @@ WSGI_APPLICATION = "portfolio_axis.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+DB_URL = config("DATABASE_URL", default="")
+use_postgres = (ENVIRONMENT == "production") or POSTGRES_LOCALLY
+
+if use_postgres:
+    if not DB_URL:
+        raise ImproperlyConfigured(
+            "DATABASE_URL es obligatorio cuando ENVIRONMENT=production o POSTGRES_LOCALLY=True"
+        )
+    parsed = urlparse(DB_URL)
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": parsed.path.lstrip("/"),
+            "USER": parsed.username or "",
+            "PASSWORD": parsed.password or "",
+            "HOST": parsed.hostname or "",
+            "PORT": str(parsed.port or ""),
+            "CONN_MAX_AGE": 600,
+        }
     }
-}
+    options = {}
+    db_sslmode = config("DB_SSLMODE", default="")
+    if db_sslmode:
+        options["sslmode"] = db_sslmode
+    else:
+        # Si la DB no es red interna, forzar SSL por defecto
+        if parsed.hostname and not parsed.hostname.endswith(".internal"):
+            options["sslmode"] = "require"
+    if options:
+        DATABASES["default"]["OPTIONS"] = options
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 
 
@@ -142,7 +177,7 @@ STATIC_ROOT = BASE_DIR/ "staticfiles"
 
 STORAGES = {
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
 
