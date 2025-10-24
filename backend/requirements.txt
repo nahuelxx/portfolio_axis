@@ -14,7 +14,7 @@ Pillow>=10.0            # Soporte para imágenes (opcional, si usas ImageField)
 psycopg2-binary>=2.9    # Para PostgreSQL (puede cambiarse según tu DB)
 gunicorn>=21.2          # Servidor WSGI para producción
 whitenoise>=6.6  
-git-filter-repo-2.47.0       # Servir archivos estáticos en producción (si el front se integra dentro del backend)
+git-filter-repo>=2.47.0       # Servir archivos estáticos en producción (si el front se integra dentro del backend)
           
 
 # ==== OPCIONALES ====
