@@ -24,6 +24,9 @@ Thumbs.db
 .vscode/
 .idea/
 
+dev_prompt.md
+dev_results.md
+
 ##Frontend##
 
 # dependencies

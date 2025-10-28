@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 from decouple import config
 from django.core.exceptions import ImproperlyConfigured
-import os
 from urllib.parse import urlparse
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -196,19 +195,13 @@ if not EMAIL_BACKEND:
         else "django.core.mail.backends.smtp.EmailBackend"
     )
 
-# Solo cargar credenciales SMTP si se usa SMTP
-if EMAIL_BACKEND.endswith("smtp.EmailBackend"):
-    EMAIL_HOST = config("EMAIL_HOST")
-    EMAIL_PORT = config("EMAIL_PORT", cast=int, default=587)
-    EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool, default=True)
-    EMAIL_USE_SSL = config("EMAIL_USE_SSL", cast=bool, default=False)
-    EMAIL_TIMEOUT = config("EMAIL_TIMEOUT", cast=int, default=30)
-    EMAIL_HOST_USER = config("EMAIL_HOST_USER")
-    EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
-
 DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="webmaster@localhost")
-
 CONTACT_RECIPIENT = config("CONTACT_RECIPIENT", default=DEFAULT_FROM_EMAIL)
+
+# Anymail (Resend) configuration
+ANYMAIL = {
+    "RESEND_API_KEY": config("RESEND_API_KEY", default=""),
+}
 
 # --- Seguridad según entorno ---
 # Activa por defecto en producción (DEBUG=False); puedes overridear por env.
@@ -220,7 +213,4 @@ SECURE_HSTS_SECONDS = config('SECURE_HSTS_SECONDS', default=(31536000 if not DEB
 SECURE_HSTS_INCLUDE_SUBDOMAINS = config('SECURE_HSTS_INCLUDE_SUBDOMAINS', default=(not DEBUG), cast=bool)
 SECURE_HSTS_PRELOAD = config('SECURE_HSTS_PRELOAD', default=(not DEBUG), cast=bool)
 
-# Anymail (Resend) configuration
-ANYMAIL = {
-    "RESEND_API_KEY": config("RESEND_API_KEY", default=""),
-}
+
