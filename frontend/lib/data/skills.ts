@@ -21,14 +21,17 @@ export const skillsData: SkillCategory[] = [
       "Python",
       "Django",
       "REST APIs",
+      "Codex",
+      "Prompt Engineering",
+      "AGENTS.md"
     ],
   },
   {
     category: "Database & DevOps",
-    skills: ["PostgreSQL","MySQL","CI/CD", "Nginx", "Git"],
+    skills: ["PostgreSQL","CI/CD", "Nginx", "Git"],
   },
   {
     category: "Tools & Metodologias",
-    skills: ["Agile/Scrum","Jira", "Postman", "VS Code", "Linux", "SOLID", "Clean Code"],
+    skills: ["Agile/Scrum","Linear", "Postman", "Thunder-Client", "VS Code", "Linux", "SOLID", "Clean Code"],
   },
 ]

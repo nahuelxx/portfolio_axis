@@ -25,12 +25,12 @@ export function ProjectsSection() {
               className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-card border-border"
             >
               <CardHeader className="p-0">
-                <div className="relative h-48 w-full overflow-hidden rounded-t-lg bg-muted">
+                <div className="relative h-80 w-full overflow-hidden rounded-t-lg bg-muted">
                   <Image
                     src={project.image || "/placeholder.svg"}
                     alt={project.title}
                     fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    className="object-cover transition-transform duration-300 group-hover:scale-100"
                   />
                 </div>
               </CardHeader>
