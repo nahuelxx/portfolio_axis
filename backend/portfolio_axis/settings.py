@@ -197,6 +197,7 @@ if not EMAIL_BACKEND:
 
 DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="webmaster@localhost")
 CONTACT_RECIPIENT = config("CONTACT_RECIPIENT", default=DEFAULT_FROM_EMAIL)
+FROM_NAME = config("FROM_NAME", default="Portfolio")
 
 # Anymail (Resend) configuration
 ANYMAIL = {
@@ -212,5 +213,4 @@ CSRF_COOKIE_SECURE = config('CSRF_COOKIE_SECURE', default=(not DEBUG), cast=bool
 SECURE_HSTS_SECONDS = config('SECURE_HSTS_SECONDS', default=(31536000 if not DEBUG else 0), cast=int)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = config('SECURE_HSTS_INCLUDE_SUBDOMAINS', default=(not DEBUG), cast=bool)
 SECURE_HSTS_PRELOAD = config('SECURE_HSTS_PRELOAD', default=(not DEBUG), cast=bool)
-
 

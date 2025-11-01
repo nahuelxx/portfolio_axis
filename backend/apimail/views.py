@@ -3,6 +3,7 @@ from rest_framework.response import Response
 
 from django.conf import settings
 from django.core.mail import EmailMessage
+from email.utils import formataddr
 
 from .models import Project, Skill, ContactMessage
 from .serializers import ProjectSerializer, SkillSerializer, ContactSerializer
@@ -53,10 +54,18 @@ class ContactViewSet(viewsets.ModelViewSet):
                 f"Mensaje:\n{message_text}"
             )
 
+            # Construimos un From con nombre legible (evita spoofing/DMARC)
+            display_from = formataddr(
+                (
+                    f"{user_name} via {getattr(settings, 'FROM_NAME', 'Website')}",
+                    settings.DEFAULT_FROM_EMAIL,
+                )
+            )
+
             msg = EmailMessage(
                 subject=f"Nuevo mensaje de {user_name}",
                 body=body,
-                from_email=settings.DEFAULT_FROM_EMAIL,
+                from_email=display_from,
                 to=[getattr(settings, "CONTACT_RECIPIENT", settings.DEFAULT_FROM_EMAIL)],
                 reply_to=[user_email] if user_email else None,
             )
@@ -66,4 +75,3 @@ class ContactViewSet(viewsets.ModelViewSet):
             logger.exception("Error enviando email de contacto: %s", e)
             # En desarrollo, respondemos 201 para no romper la UX
             return Response({"ok": True, "email_sent": False}, status=status.HTTP_201_CREATED)
-
